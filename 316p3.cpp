@@ -4,6 +4,7 @@
 #include <vector>
 #include <fstream>
 #include <list>
+#include <stack>
 using namespace std;
 
 struct Edge
@@ -50,9 +51,48 @@ struct Graph
         }
     }
     
+    void topological_sort_loop(int v, bool visited[], stack<int>& Stack)
+    {
+        visited[v] = true;
+        
+        list< pair<int, int> >::iterator i;
+        for (i = this->adj[v].begin(); i != this->adj[v].end(); ++i)
+        {
+            if(!visited[i->first])
+            {
+                topological_sort_loop(i->first, visited, Stack);
+            }
+        }
+        
+        Stack.push(v);
+    }
+    
     void topological_sort()
     {
-        cout << "WE ARE SORTING...\n";
+        stack<int> Stack;
+        
+        bool* visited = new bool [number_of_vertices];
+        
+        for (int i = 0; i < number_of_vertices; i++)
+        {
+            visited[i] = false;
+        }
+        
+        for (int i = 0; i < number_of_vertices; i++)
+        {
+            if (visited[i] == false)
+            {
+                topological_sort_loop(i, visited, Stack);
+                
+            }
+        }
+        
+        while(Stack.empty() == false)
+        {
+            cout << Stack.top() << " ";
+            Stack.pop();
+        }
+        
         
     }
 };
@@ -174,7 +214,7 @@ void sort(vector<Edge> edges)
     
     cout << "Topological Sorting of Graph:\n";
     graph.topological_sort();
-    cout << endl;
+    cout << endl << endl;
     
     
 }
