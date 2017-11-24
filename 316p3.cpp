@@ -3,9 +3,8 @@
 #include <iostream>
 #include <vector>
 #include <fstream>
+#include <list>
 using namespace std;
-
-#define N 6
 
 struct Edge
 {
@@ -14,10 +13,34 @@ struct Edge
 
 struct Graph
 {
-    vector< pair<int,int> > adjList[N];
+    int number_of_vertices;
+    list< pair<int, int> > *adj;
     
-    Graph(vector<Edge> edges)
+    Graph()
     {
+        number_of_vertices = 0;
+    }
+    
+    Graph(int number_of_vertices)
+    {
+        this->number_of_vertices = number_of_vertices;
+        adj = new list< pair<int, int> >[number_of_vertices];
+    }
+    
+    void add_edge(Edge edge)
+    {
+        adj[edge.src].push_back(make_pair(edge.dest, edge.weight));
+    }
+    
+    void printGraph()
+    {
+        
+        
+    }
+    
+    /*Graph(vector<Edge> edges)
+    {
+        adjList.resize(edges.size());
         for (int i = 0; i < edges.size(); i++)
         {
             int src = edges[i].src;
@@ -26,12 +49,12 @@ struct Graph
             
             adjList[src].push_back(make_pair(dest, weight));
         }
-    }
+    }*/
     
 };
 
 vector<Edge> openInput(vector<Edge>);
-void sort();
+void sort(vector<Edge>);
 
 
 int main()
@@ -63,7 +86,7 @@ int main()
                 }
                 break;
             case 2:
-                sort();
+                sort(edges);
                 break;
             case 3:
                 cout << "Quitting...\n";
@@ -82,8 +105,6 @@ vector<Edge> openInput(vector<Edge> edges)
     string file_string;
     
     vector<string>fileVect;
-    
-    
     
     //getline(cin, file_string);
     
@@ -139,8 +160,14 @@ vector<Edge> openInput(vector<Edge> edges)
     
 }
 
-void sort()
+void sort(vector<Edge> edges)
 {
     cout << "We are sorting...\n";
     
+    Graph graph(edges.size());
+    
+    for (int i = 0; i < edges.size(); i++)
+    {
+        graph.add_edge(edges[i]);
+    }
 }
