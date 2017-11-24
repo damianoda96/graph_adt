@@ -34,23 +34,22 @@ struct Graph
     
     void printGraph()
     {
-        
+        for (int i = 0; i < number_of_vertices; i++)
+        {
+            bool canPrint = false;
+            for (pair<int, int> v : this->adj[i])
+            {
+                cout << i << v.first << v.second;
+                canPrint = true;
+            }
+            
+            if(canPrint)
+            {
+                cout << endl;
+            }
+        }
         
     }
-    
-    /*Graph(vector<Edge> edges)
-    {
-        adjList.resize(edges.size());
-        for (int i = 0; i < edges.size(); i++)
-        {
-            int src = edges[i].src;
-            int dest = edges[i].dest;
-            int weight = edges[i].weight;
-            
-            adjList[src].push_back(make_pair(dest, weight));
-        }
-    }*/
-    
 };
 
 vector<Edge> openInput(vector<Edge>);
@@ -170,4 +169,6 @@ void sort(vector<Edge> edges)
     {
         graph.add_edge(edges[i]);
     }
+    
+    graph.printGraph();
 }
