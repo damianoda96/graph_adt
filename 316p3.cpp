@@ -32,14 +32,14 @@ struct Graph
         adj[edge.src].push_back(make_pair(edge.dest, edge.weight));
     }
     
-    void printGraph()
+    void print_graph()
     {
         for (int i = 0; i < number_of_vertices; i++)
         {
             bool canPrint = false;
             for (pair<int, int> v : this->adj[i])
             {
-                cout << i << v.first << v.second;
+                cout << "[" << i << "," << v.first << "," << v.second << "] ";
                 canPrint = true;
             }
             
@@ -48,11 +48,16 @@ struct Graph
                 cout << endl;
             }
         }
+    }
+    
+    void topological_sort()
+    {
+        cout << "WE ARE SORTING...\n";
         
     }
 };
 
-vector<Edge> openInput(vector<Edge>);
+vector<Edge> open_input(vector<Edge>);
 void sort(vector<Edge>);
 
 
@@ -77,12 +82,7 @@ int main()
         switch (choice)
         {
             case 1:
-                edges = openInput(edges);
-                
-                for(int i = 0; i < edges.size(); i++)
-                {
-                    cout << edges[i].src << " " << edges[i].dest << " " << edges[i].weight << endl;
-                }
+                edges = open_input(edges);
                 break;
             case 2:
                 sort(edges);
@@ -99,7 +99,7 @@ int main()
     return 0;
 }
 
-vector<Edge> openInput(vector<Edge> edges)
+vector<Edge> open_input(vector<Edge> edges)
 {
     string file_string;
     
@@ -115,12 +115,12 @@ vector<Edge> openInput(vector<Edge> edges)
     while(!inFile.eof())
     {
         getline(inFile, file_string);
-        cout << file_string << endl;
+        //cout << file_string << endl;
         fileVect.push_back(file_string);
     }
     inFile.close();
     
-    cout << "FILE OPENED..." << endl;
+    cout << "\nFILE OPENED..." << endl << endl;
     
     for (int i = 0; i < fileVect.size(); i++)
     {
@@ -161,8 +161,6 @@ vector<Edge> openInput(vector<Edge> edges)
 
 void sort(vector<Edge> edges)
 {
-    cout << "We are sorting...\n";
-    
     Graph graph(edges.size());
     
     for (int i = 0; i < edges.size(); i++)
@@ -170,5 +168,13 @@ void sort(vector<Edge> edges)
         graph.add_edge(edges[i]);
     }
     
-    graph.printGraph();
+    cout << "\nAdjacency List Representation of Graph:\n";
+    graph.print_graph();
+    cout << endl;
+    
+    cout << "Topological Sorting of Graph:\n";
+    graph.topological_sort();
+    cout << endl;
+    
+    
 }
