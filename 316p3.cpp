@@ -1,4 +1,5 @@
 //Deven Damiano dad152@zips.uakron.edu
+//Data Structures Project 3
 
 #include <iostream>
 #include <vector>
@@ -38,6 +39,7 @@ struct Graph
         for (int i = 0; i < number_of_vertices; i++)
         {
             bool canPrint = false;
+            
             for (pair<int, int> v : this->adj[i])
             {
                 cout << "[" << i << "," << v.first << "," << v.second << "] ";
@@ -83,7 +85,6 @@ struct Graph
             if (visited[i] == false)
             {
                 topological_sort_loop(i, visited, Stack);
-                
             }
         }
         
@@ -92,8 +93,6 @@ struct Graph
             cout << Stack.top() << " ";
             Stack.pop();
         }
-        
-        
     }
 };
 
@@ -145,12 +144,14 @@ vector<Edge> open_input(vector<Edge> edges)
     
     vector<string>fileVect;
     
-    //getline(cin, file_string);
+    cout << "Input the file name:\n";
+    
+    getline(cin, file_string);
     
     ifstream inFile;
     
-    //inFile.open(file_string);
-    inFile.open("graph.txt");
+    inFile.open(file_string);
+    //inFile.open("graph.txt");
     
     while(!inFile.eof())
     {
